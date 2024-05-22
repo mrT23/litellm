@@ -56,10 +56,13 @@ os.environ["TIKTOKEN_CACHE_DIR"] = (
 encoding = tiktoken.get_encoding("cl100k_base")
 from importlib import resources
 
-with resources.open_text("litellm.llms.tokenizers", "anthropic_tokenizer.json") as f:
-    json_data = json.load(f)
-# Convert to str (if necessary)
-claude_json_str = json.dumps(json_data)
+try:
+    with resources.open_text("litellm.llms.tokenizers", "anthropic_tokenizer.json") as f:
+        json_data = json.load(f)
+    # Convert to str (if necessary)
+    claude_json_str = json.dumps(json_data)
+except:
+    claude_json_str=""
 import importlib.metadata
 from ._logging import verbose_logger
 from .types.router import LiteLLM_Params
